@@ -1,5 +1,11 @@
 import type { MediaInfo } from "@/types";
 
+export const URLS = {
+  CONTENT_SCRIPT: "*://music.youtube.com/*",
+  SHORTCUTS: "chrome://extensions/shortcuts",
+  PLAY_MUSIC: "https://music.youtube.com/watch?list=RDMM&start_radio=1",
+};
+
 export const COMMANDS = {
   PLAY_PAUSE: "play-pause",
   NEXT_TRACK: "next-track",

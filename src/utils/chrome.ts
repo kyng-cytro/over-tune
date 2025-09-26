@@ -1,14 +1,15 @@
+import { COMMANDS, KEYS, URLS } from "@/constants";
 import type { Keybind, MessageContent } from "@/types";
 
 export const openShortcuts = () => {
-  return chrome.tabs.create({ url: "chrome://extensions/shortcuts" });
+  return chrome.tabs.create({ url: URLS.SHORTCUTS });
 };
 
 export const sendBroadcast = (
   content: MessageContent,
   cb?: (response: any) => void,
 ) => {
-  chrome.runtime.sendMessage(content, (response) => {
+  chrome.runtime.sendMessage(content).then((response) => {
     if (cb) cb(response);
   });
 };
@@ -17,14 +18,19 @@ export const sendToContent = (
   content: MessageContent,
   cb?: (response: any) => void,
 ) => {
-  chrome.tabs.query({ url: "*://music.youtube.com/*" }, (tabs) => {
-    for (const tab of tabs) {
-      if (tab.id) {
-        chrome.tabs.sendMessage(tab.id, content, (response) => {
-          if (cb) cb(response);
-        });
-      }
+  chrome.tabs.query({ url: URLS.CONTENT_SCRIPT }, (tabs) => {
+    if (
+      !tabs.length &&
+      content.type === KEYS.COMMAND_TRIGGERED &&
+      content.command === COMMANDS.PLAY_PAUSE
+    ) {
+      return chrome.tabs.create({ url: URLS.PLAY_MUSIC });
     }
+    const tab = tabs[0];
+    if (!tab || !tab.id) return;
+    chrome.tabs.sendMessage(tab.id, content).then((response) => {
+      if (cb) cb(response);
+    });
   });
 };
 

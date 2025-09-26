@@ -1,3 +1,4 @@
+import { URLS } from "./src/constants.ts";
 import { defineManifest } from "@crxjs/vite-plugin";
 
 export default defineManifest({
@@ -26,7 +27,7 @@ export default defineManifest({
   content_scripts: [
     {
       js: ["src/content/index.ts"],
-      matches: ["https://music.youtube.com/*"],
+      matches: [URLS.CONTENT_SCRIPT],
     },
   ],
   commands: {
