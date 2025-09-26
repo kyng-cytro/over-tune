@@ -6,6 +6,12 @@ import { Pause, Play, SkipBack, SkipForward } from "lucide-vue-next";
 import Image from "./image.vue";
 import { computed } from "vue";
 
+defineEmits<{
+  (e: "nextTrack"): void;
+  (e: "previousTrack"): void;
+  (e: "togglePlayPause"): void;
+}>();
+
 const props = withDefaults(
   defineProps<{
     current?: MediaInfo;
@@ -28,10 +34,6 @@ const props = withDefaults(
 const progress = computed(
   () => ((props.current.progress || 0) / (props.current.duration || 180)) * 100,
 );
-
-const nextTrack = () => {};
-const previousTrack = () => {};
-const togglePlayPause = () => {};
 </script>
 <template>
   <div
@@ -61,14 +63,19 @@ const togglePlayPause = () => {};
       </div>
     </div>
     <div class="flex w-full items-center justify-evenly gap-2">
-      <Button size="sm" variant="control" @click="previousTrack">
+      <Button size="sm" variant="control" @click="$emit('previousTrack')">
         <SkipBack class="size-4" />
       </Button>
-      <Button variant="primary" size="lg" @click="togglePlayPause" class="p-3">
+      <Button
+        variant="primary"
+        size="lg"
+        class="p-3"
+        @click="$emit('togglePlayPause')"
+      >
         <Play v-if="!isPlaying(current.status)" class="ml-0.5 size-5" />
         <Pause v-else class="size-5" />
       </Button>
-      <Button size="sm" variant="control" @click="nextTrack">
+      <Button size="sm" variant="control" @click="$emit('nextTrack')">
         <SkipForward class="size-4" />
       </Button>
     </div>

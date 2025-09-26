@@ -31,17 +31,14 @@ export default defineManifest({
   ],
   commands: {
     "play-pause": {
-      global: true,
       description: "Play/Pause",
       suggested_key: { default: "Ctrl+Space" },
     },
     "next-track": {
-      global: true,
       description: "Next track",
       suggested_key: { default: "Shift+Alt+0" },
     },
     "prev-track": {
-      global: true,
       description: "Previous track",
       suggested_key: { default: "Shift+Alt+9" },
     },

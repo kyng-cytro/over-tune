@@ -1,4 +1,4 @@
-import type { MessageContent } from "@/types";
+import type { Keybind, MessageContent } from "@/types";
 
 export const openShortcuts = () => {
   return chrome.tabs.create({ url: "chrome://extensions/shortcuts" });
@@ -27,3 +27,21 @@ export const sendToContent = (
     }
   });
 };
+
+export function getKeybinds(): Promise<Keybind[]> {
+  return new Promise((resolve) => {
+    chrome.commands.getAll((commands) => {
+      const keybinds: Keybind[] = commands
+        .map((cmd, idx) => {
+          return {
+            key: cmd.shortcut || "Unset",
+            name: cmd.name || `custom-${idx + 1}`,
+            action: cmd.description || `Custom action ${idx + 1}`,
+          };
+        })
+        .reverse()
+        .sort((a) => (a.key !== "Unset" ? -1 : 1));
+      resolve(keybinds);
+    });
+  });
+}

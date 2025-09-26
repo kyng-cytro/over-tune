@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Keybind } from "@/types";
-import { getKeybinds } from "@/utils/keybinds";
+import { getKeybinds } from "@/utils/chrome";
 import { onMounted, ref } from "vue";
 import KeybindItem from "./item.vue";
 
