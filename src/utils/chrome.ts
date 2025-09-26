@@ -24,7 +24,7 @@ export const sendToContent = (
       content.type === KEYS.COMMAND_TRIGGERED &&
       content.command === COMMANDS.PLAY_PAUSE
     ) {
-      return chrome.tabs.create({ url: URLS.PLAY_MUSIC });
+      return chrome.tabs.create({ pinned: true, url: URLS.PLAY_MUSIC });
     }
     const tab = tabs[0];
     if (!tab || !tab.id) return;
