@@ -58,5 +58,14 @@ const handleActions = (action: string) => {
       </Button>
     </div>
     <Keybinds />
+    <div class="font-heading mt-2 -mb-2 flex justify-end py-1 font-semibold">
+      <a
+        target="_blank"
+        href="https://github.com/kyng-cytro"
+        class="[&:hover,&:focus]:text-primary underline-offset-2 [&:hover,&:focus]:underline"
+      >
+        By Cytro with ❤️
+      </a>
+    </div>
   </div>
 </template>
