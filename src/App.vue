@@ -6,7 +6,7 @@ import OutputSelect from "@/components/OutputSelect/index.vue";
 import { COMMANDS, makeMsg } from "@/constants";
 import type { MediaInfo } from "@/types";
 import { openShortcuts, sendBroadcast, sendToContent } from "@/utils/chrome";
-import { Settings2 } from "lucide-vue-next";
+import { BadgeQuestionMark, Settings2 } from "lucide-vue-next";
 import { onMounted, ref } from "vue";
 
 const current = ref<MediaInfo>();
@@ -29,11 +29,13 @@ const handleActions = (action: string) => {
 </script>
 <template>
   <div
-    class="flex h-[600px] w-80 flex-col rounded-xl border border-slate-200 bg-slate-50 p-4 shadow-lg"
+    class="border-border bg-card flex h-[600px] w-80 flex-col border p-4 shadow-lg"
   >
-    <div class="mb-6 flex items-center justify-center gap-3">
-      <img src="/icon128.png" alt="icon" class="size-8 rounded-lg" />
-      <h1 class="text-2xl font-bold text-slate-800">YTM Plus</h1>
+    <div class="mb-6 flex items-center justify-between gap-3">
+      <img src="/logo.png" alt="icon" class="h-10 rounded-lg" />
+      <Button size="md" variant="secondary" class="rounded-full">
+        <BadgeQuestionMark class="size-4" />
+      </Button>
     </div>
     <div class="mb-6">
       <NowPlaying

@@ -3,7 +3,7 @@ import { defineManifest } from "@crxjs/vite-plugin";
 
 export default defineManifest({
   manifest_version: 3,
-  name: "YTM Plus",
+  name: "Over Tune",
   version: "1.0.0",
   icons: {
     "16": "icon16.png",
@@ -11,7 +11,7 @@ export default defineManifest({
     "128": "icon128.png",
   },
   action: {
-    default_title: "YTM Plus",
+    default_title: "Over Tune",
     default_popup: "index.html",
     default_icon: {
       "16": "icon16.png",

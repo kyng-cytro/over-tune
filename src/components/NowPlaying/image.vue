@@ -16,8 +16,8 @@ defineProps<{
   />
   <div
     v-else
-    class="flex size-14 items-center justify-center rounded-lg bg-slate-300 shadow-md"
+    class="bg-muted flex size-14 items-center justify-center rounded-lg shadow-md"
   >
-    <Music class="size-6 text-slate-600" />
+    <Music class="text-foreground/70 size-6" />
   </div>
 </template>

@@ -37,25 +37,25 @@ const progress = computed(
 </script>
 <template>
   <div
-    class="flex w-full flex-col justify-center gap-4 rounded-xl border border-slate-200 bg-slate-100 p-4 shadow-sm"
+    class="border-border bg-card flex w-full flex-col justify-center gap-4 rounded-xl border p-4 shadow-sm"
   >
     <div class="flex items-center gap-4">
       <Image :artwork="current.track.artwork" />
       <div class="flex-1 overflow-hidden">
-        <h3 class="truncate text-sm font-semibold text-slate-800">
+        <h3 class="text-foreground truncate text-sm font-semibold">
           {{ current.track.title }}
         </h3>
-        <p class="truncate text-xs text-slate-500">
+        <p class="text-muted-foreground truncate text-xs">
           {{ current.track.artist }}
         </p>
         <div class="mt-2">
-          <div class="h-1 w-full overflow-hidden rounded-full bg-slate-200">
+          <div class="bg-muted h-1 w-full overflow-hidden rounded-full">
             <div
               :style="{ width: `${progress}%` }"
-              class="h-full rounded-full bg-slate-500 transition-all duration-300"
+              class="bg-primary h-full rounded-full transition-all duration-300"
             ></div>
           </div>
-          <div class="mt-1 flex justify-between text-xs text-slate-400">
+          <div class="text-muted-foreground mt-1 flex justify-between text-xs">
             <span>{{ formatTime(current.progress) }}</span>
             <span>{{ formatTime(current.duration) }}</span>
           </div>

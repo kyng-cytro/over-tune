@@ -7,15 +7,15 @@ defineProps<{
 </script>
 
 <template>
-  <div class="flex items-center justify-between rounded-lg bg-slate-100 p-3">
+  <div class="bg-muted flex items-center justify-between rounded-lg p-3">
     <div class="flex items-center gap-3">
-      <div class="flex size-8 items-center justify-center rounded bg-slate-200">
+      <div class="bg-muted/70 flex size-8 items-center justify-center rounded">
         <Command class="size-4" v-if="keybind.key !== 'Unset'" />
       </div>
-      <span class="text-sm text-slate-700 capitalize">{{
+      <span class="text-foreground text-sm capitalize">{{
         keybind.action
       }}</span>
     </div>
-    <span class="text-xs text-slate-500">{{ keybind.key }}</span>
+    <span class="text-muted-foreground text-xs">{{ keybind.key }}</span>
   </div>
 </template>

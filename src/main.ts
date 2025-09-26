@@ -1,5 +1,6 @@
+import colorMode from "@/plugins/color-mode";
 import { createApp } from "vue";
-import "./assets/css/tailwind.css";
 import App from "./App.vue";
+import "./assets/css/tailwind.css";
 
-createApp(App).mount("#app");
+createApp(App).use(colorMode).mount("#app");

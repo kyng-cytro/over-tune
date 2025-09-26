@@ -1,5 +1,6 @@
 import { COMMANDS, KEYS, URLS } from "@/constants";
 import type { Keybind, MessageContent } from "@/types";
+import { isDefined } from ".";
 
 export const openShortcuts = () => {
   return chrome.tabs.create({ url: URLS.SHORTCUTS });
@@ -38,13 +39,15 @@ export function getKeybinds(): Promise<Keybind[]> {
   return new Promise((resolve) => {
     chrome.commands.getAll((commands) => {
       const keybinds: Keybind[] = commands
-        .map((cmd, idx) => {
+        .map((cmd) => {
+          if (!cmd.name || !cmd.description) return null;
           return {
+            name: cmd.name,
+            action: cmd.description,
             key: cmd.shortcut || "Unset",
-            name: cmd.name || `custom-${idx + 1}`,
-            action: cmd.description || `Custom action ${idx + 1}`,
           };
         })
+        .filter(isDefined)
         .reverse()
         .sort((a) => (a.key !== "Unset" ? -1 : 1));
       resolve(keybinds);

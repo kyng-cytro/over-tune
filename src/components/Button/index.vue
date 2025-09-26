@@ -31,24 +31,24 @@ defineEmits<{
 
 const buttonClasses = computed(() => {
   const baseClasses =
-    "rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-slate-300";
+    "rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-ring";
 
   const variantClasses = {
     primary:
-      "bg-slate-600 text-white shadow-md hover:bg-slate-700 hover:shadow-lg disabled:bg-slate-400 disabled:cursor-not-allowed",
+      "bg-primary text-primary-foreground shadow-md hover:bg-primary/90 hover:shadow-lg disabled:bg-primary/60 disabled:cursor-not-allowed",
     secondary:
-      "bg-slate-100 text-slate-700 border border-slate-200 hover:bg-slate-200 disabled:bg-slate-50 disabled:text-slate-400",
+      "bg-muted text-foreground border border-border hover:bg-muted/80 disabled:bg-muted disabled:text-muted-foreground",
     ghost:
-      "text-slate-600 hover:bg-slate-200 disabled:text-slate-400 disabled:cursor-not-allowed",
+      "text-foreground hover:bg-muted disabled:text-muted-foreground disabled:cursor-not-allowed",
     control:
-      "rounded-full text-slate-600 hover:bg-slate-200 disabled:opacity-50 disabled:cursor-not-allowed",
-  };
+      "rounded-full text-foreground hover:bg-muted disabled:opacity-50 disabled:cursor-not-allowed",
+  } as const;
 
   const sizeClasses = {
     sm: "px-2 py-1 text-xs",
     md: "px-3 py-2 text-sm",
     lg: "px-4 py-3 text-sm",
-  };
+  } as const;
 
   const widthClasses = props.fullWidth
     ? "w-full flex items-center justify-center gap-2"
