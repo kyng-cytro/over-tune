@@ -27,7 +27,7 @@ Whether you want quicker controls, personalized shortcuts, or flexible device ro
 ## Help & Usage
 
 Need help getting started?
-Check out the [Over Tune Guide](./Guide.md) for setup tips, shortcut customization, audio device switching, and FAQs.
+Check out the [Over Tune Guide](./GUIDE.md) for setup tips, shortcut customization, audio device switching, and FAQs.
 
 ## Contributing
 
