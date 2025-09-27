@@ -32,7 +32,7 @@ onMounted(() => {
       <Button size="md" variant="secondary" class="rounded-full">
         <a
           target="_blank"
-          href="https://github.com/kyng-cytro/over-tune/GUIDE.md"
+          href="https://github.com/kyng-cytro/over-tune/blob/main/GUIDE.md"
         >
           <BadgeQuestionMark class="size-4" />
         </a>
