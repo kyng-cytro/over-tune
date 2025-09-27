@@ -1,6 +1,6 @@
 # Over Tune
 
-Over Tune is a Chrome extension that allows you to fully customize your YouTube Music experience.  
+Over Tune is a Chrome extension that allows you to fully customize your YouTube Music experience.
 Whether you want quicker controls, personalized shortcuts, or flexible device routing, Over Tune helps you stay in tune with your music.
 
 ## Features
@@ -19,7 +19,7 @@ Whether you want quicker controls, personalized shortcuts, or flexible device ro
 
 ## Installation
 
-1. Download the latest `release.zip` from the [Releases page](https://github.com/kyng-cyrto/<repo>/releases).
+1. Download the latest `release.zip` from the [Releases page](https://github.com/kyng-cytro/over-tune/releases).
 2. Extract the `.zip` file.
 3. Open Chrome and go to `chrome://extensions/`.
 4. Enable **Developer mode** (toggle in the top-right).
@@ -44,5 +44,3 @@ Contributions are welcome!
 Please open an issue first if you’d like to discuss a major change.
 
 ---
-
-🚀 Start customizing your YouTube Music today with **Over Tune**!

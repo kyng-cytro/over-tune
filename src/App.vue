@@ -30,7 +30,12 @@ onMounted(() => {
     <div class="mb-6 flex items-center justify-between gap-3">
       <img src="/logo.png" alt="icon" class="h-10 rounded-lg" />
       <Button size="md" variant="secondary" class="rounded-full">
-        <BadgeQuestionMark class="size-4" />
+        <a
+          target="_blank"
+          href="https://github.com/kyng-cytro/over-tune/GUIDE.md"
+        >
+          <BadgeQuestionMark class="size-4" />
+        </a>
       </Button>
     </div>
     <div class="mb-6">
