@@ -12,8 +12,8 @@ Whether you want quicker controls, personalized shortcuts, or flexible device ro
 
 ## Screenshots
 
-![Now Playing Widget](public/screenshots/now-playing-light.png)
-![Now Playing Widget Dark](public/screenshots/now-playing-dark.png)
+![Now Playing Widget](public/screenshots/light-mode.png)
+![Now Playing Widget Dark](public/screenshots/dark-mode.png)
 ![Device Selection](public/screenshots/device-select.png)
 ![Custom Shortcuts](public/screenshots/shortcuts.png)
 
