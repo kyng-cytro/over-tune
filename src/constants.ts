@@ -1,5 +1,9 @@
 import type { MediaInfo } from "@/types";
 
+export const STORAGE_KEYS = {
+  PREFERRED_SINK_ID: "preferredSinkId",
+};
+
 export const URLS = {
   CONTENT_SCRIPT: "*://music.youtube.com/*",
   SHORTCUTS: "chrome://extensions/shortcuts",
