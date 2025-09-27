@@ -38,7 +38,7 @@ The permission prompt comes from YouTube Music itself, because Chrome requires i
 
 **Does Over Tune store data?**
 Not really. Outside of fonts (pulled from Google Fonts — yeah, I should probably bundle those 😅), Over Tune doesn't reach out to the internet in any way.
-In the future I _might_ add optional storage for preferred devices, but nothing right now.
+Over Tune does store your preferred device ID, but it's right in your browser's local storage.
 
 ---
 

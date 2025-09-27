@@ -10,3 +10,14 @@ export const triggerCommand = (action: string) => {
 export const setDevice = (deviceId: string) => {
   sendToContent(makeMsg.SET_DEVICE(deviceId));
 };
+
+export const isSame = (a: Object | null, b: Object | null) =>
+  JSON.stringify(a) === JSON.stringify(b);
+
+export const updateSink = (media: HTMLMediaElement, sinkId: string) => {
+  if (typeof media.setSinkId === "function") {
+    media.setSinkId(sinkId).catch(() => {
+      chrome.storage.local.set({ preferredSinkId: undefined });
+    });
+  }
+};

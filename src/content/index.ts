@@ -1,10 +1,9 @@
 import { COMMANDS, KEYS, makeMsg } from "@/constants";
 import type { MediaInfo } from "@/types";
+import { isSame, updateSink } from "@/utils";
 import { getDevices, sendBroadcast } from "@/utils/chrome";
 
 let previousInfo: MediaInfo | null = null;
-const isSame = (a: MediaInfo | null, b: MediaInfo | null) =>
-  JSON.stringify(a) === JSON.stringify(b);
 
 const getMediaInfo = () => {
   const meta = navigator.mediaSession.metadata;
@@ -37,11 +36,28 @@ pushUpdate();
 
 chrome.runtime.onMessage.addListener((msg) => {
   if (msg.type !== KEYS.SET_DEVICE) return;
+  chrome.storage.local.set({ preferredSinkId: msg.deviceId });
   const media = document.querySelector(
     "audio, video",
   ) as HTMLMediaElement | null;
   if (!media) return;
   media.setSinkId(msg.deviceId);
+});
+
+chrome.storage.local.get("preferredSinkId").then(({ preferredSinkId }) => {
+  if (!preferredSinkId) return;
+  document.querySelectorAll("audio, video").forEach((media) => {
+    updateSink(media as HTMLMediaElement, preferredSinkId);
+  });
+  new MutationObserver((mutations) => {
+    for (const m of mutations) {
+      for (const node of m.addedNodes) {
+        if (node instanceof HTMLMediaElement) {
+          updateSink(node, preferredSinkId);
+        }
+      }
+    }
+  }).observe(document.body, { childList: true, subtree: true });
 });
 
 chrome.runtime.onMessage.addListener((msg, _, sendResponse) => {
