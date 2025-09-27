@@ -1,6 +1,6 @@
-import { makeMsg, KEYS, COMMANDS } from "@/constants";
+import { COMMANDS, KEYS, makeMsg } from "@/constants";
 import type { MediaInfo } from "@/types";
-import { sendBroadcast } from "@/utils/chrome";
+import { getDevices, sendBroadcast } from "@/utils/chrome";
 
 let previousInfo: MediaInfo | null = null;
 const isSame = (a: MediaInfo | null, b: MediaInfo | null) =>
@@ -34,6 +34,37 @@ const pushUpdate = () => {
 
 setInterval(pushUpdate, 2000);
 pushUpdate();
+
+chrome.runtime.onMessage.addListener((msg) => {
+  if (msg.type !== KEYS.SET_DEVICE) return;
+  const media = document.querySelector(
+    "audio, video",
+  ) as HTMLMediaElement | null;
+  if (!media) return;
+  media.setSinkId(msg.deviceId);
+});
+
+chrome.runtime.onMessage.addListener((msg, _, sendResponse) => {
+  if (msg.type !== KEYS.GET_DEVICES) return;
+  (async () => {
+    const result = await getDevices();
+    if (!result.success) {
+      sendResponse([]);
+    } else {
+      const media = document.querySelector(
+        "audio, video",
+      ) as HTMLMediaElement | null;
+      const sinkId = media?.sinkId || "default";
+      const devices = result.devices.map((device) => ({
+        name: device.label,
+        id: device.deviceId,
+        isActive: device.deviceId === sinkId,
+      }));
+      sendResponse(devices);
+    }
+  })();
+  return true;
+});
 
 chrome.runtime.onMessage.addListener((msg) => {
   if (msg.type !== KEYS.COMMAND_TRIGGERED) return;

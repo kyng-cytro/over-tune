@@ -1,14 +1,20 @@
 type Base = null | undefined;
 
+export interface Keybind {
+  key: string;
+  name: string;
+  action: string;
+}
+
 export interface MessageContent {
   type: string;
   [key: string]: any;
 }
 
-export interface Keybind {
-  key: string;
+export interface Device {
+  id: string;
   name: string;
-  action: string;
+  isActive: boolean;
 }
 
 export interface MediaInfo {

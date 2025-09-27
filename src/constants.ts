@@ -17,13 +17,20 @@ export const COMMANDS = {
 
 export const KEYS = {
   GET_MEDIA: "GET_MEDIA",
+  SET_DEVICE: "SET_DEVICE",
+  GET_DEVICES: "GET_DEVICES",
   MEDIA_UPDATE: "MEDIA_UPDATE",
   COMMAND_TRIGGERED: "COMMAND_TRIGGERED",
 } as const;
 
 export const makeMsg = {
   GET_MEDIA: () => ({ type: KEYS.GET_MEDIA }),
+  GET_DEVICES: () => ({ type: KEYS.GET_DEVICES }),
   MEDIA_UPDATE: (data: MediaInfo) => ({ type: KEYS.MEDIA_UPDATE, data }),
+  SET_DEVICE: (deviceId: string) => ({
+    deviceId,
+    type: KEYS.SET_DEVICE,
+  }),
   COMMAND_TRIGGERED: (command: string) => ({
     command,
     type: KEYS.COMMAND_TRIGGERED,

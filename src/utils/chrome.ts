@@ -35,7 +35,7 @@ export const sendToContent = (
   });
 };
 
-export function getKeybinds(): Promise<Keybind[]> {
+export const getKeybinds = (): Promise<Keybind[]> => {
   return new Promise((resolve) => {
     chrome.commands.getAll((commands) => {
       const keybinds: Keybind[] = commands
@@ -53,4 +53,32 @@ export function getKeybinds(): Promise<Keybind[]> {
       resolve(keybinds);
     });
   });
-}
+};
+
+export const getDevices = async (): Promise<
+  | {
+      success: false;
+      error: string;
+    }
+  | { success: true; devices: MediaDeviceInfo[] }
+> => {
+  if (!navigator.permissions) {
+    return { success: false, error: "navigator.permissions not supported" };
+  }
+  try {
+    const status = await navigator.permissions.query({ name: "microphone" });
+    if (status.state !== "granted") {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        audio: true,
+      });
+      stream.getTracks().forEach((track) => track.stop());
+    }
+    const devices = await navigator.mediaDevices.enumerateDevices();
+    const audioDevices = devices.filter(
+      (device) => device.kind === "audiooutput",
+    );
+    return { success: true, devices: audioDevices };
+  } catch (e: any) {
+    return { success: false, error: e.message };
+  }
+};

@@ -5,12 +5,12 @@ import NowPlaying from "@/components/NowPlaying/index.vue";
 import OutputSelect from "@/components/OutputSelect/index.vue";
 import { COMMANDS, makeMsg } from "@/constants";
 import type { MediaInfo } from "@/types";
-import { openShortcuts, sendBroadcast, sendToContent } from "@/utils/chrome";
+import { setDevice, triggerCommand } from "@/utils";
+import { openShortcuts, sendBroadcast } from "@/utils/chrome";
 import { BadgeQuestionMark, Settings2 } from "lucide-vue-next";
 import { onMounted, ref } from "vue";
 
 const current = ref<MediaInfo>();
-
 onMounted(() => {
   sendBroadcast(makeMsg.GET_MEDIA(), (res) => {
     if (!res) return;
@@ -22,10 +22,6 @@ onMounted(() => {
     }
   });
 });
-
-const handleActions = (action: string) => {
-  sendToContent(makeMsg.COMMAND_TRIGGERED(action));
-};
 </script>
 <template>
   <div
@@ -40,12 +36,12 @@ const handleActions = (action: string) => {
     <div class="mb-6">
       <NowPlaying
         :current
-        @nextTrack="handleActions(COMMANDS.NEXT_TRACK)"
-        @previousTrack="handleActions(COMMANDS.PREV_TRACK)"
-        @togglePlayPause="handleActions(COMMANDS.PLAY_PAUSE)"
+        @nextTrack="triggerCommand(COMMANDS.NEXT_TRACK)"
+        @previousTrack="triggerCommand(COMMANDS.PREV_TRACK)"
+        @togglePlayPause="triggerCommand(COMMANDS.PLAY_PAUSE)"
       />
     </div>
-    <OutputSelect />
+    <OutputSelect @set-device="setDevice" />
     <div class="mb-4">
       <Button
         size="lg"

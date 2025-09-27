@@ -3,8 +3,8 @@ import Button from "@/components/Button/index.vue";
 import type { MediaInfo } from "@/types";
 import { formatTime, isPlaying } from "@/utils/date";
 import { Pause, Play, SkipBack, SkipForward } from "lucide-vue-next";
-import Image from "./image.vue";
 import { computed } from "vue";
+import Image from "./image.vue";
 
 defineEmits<{
   (e: "nextTrack"): void;
