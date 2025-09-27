@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import Button from "@/components/Button/index.vue";
-import Keybinds from "@/components/Keybinds/index.vue";
 import NowPlaying from "@/components/NowPlaying/index.vue";
 import OutputSelect from "@/components/OutputSelect/index.vue";
+import Shortcuts from "@/components/Shortcuts/index.vue";
 import { COMMANDS, makeMsg } from "@/constants";
 import type { MediaInfo } from "@/types";
 import { setDevice, triggerCommand } from "@/utils";
@@ -50,10 +50,10 @@ onMounted(() => {
         @click="openShortcuts"
       >
         <Settings2 class="size-4" />
-        <span>Edit Key Binds</span>
+        <span>Edit Shortcuts</span>
       </Button>
     </div>
-    <Keybinds />
+    <Shortcuts />
     <div class="font-heading mt-2 -mb-2 flex justify-end py-1 font-semibold">
       <a
         target="_blank"

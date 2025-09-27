@@ -1,8 +1,8 @@
 <script setup lang="ts">
+import type { Shortcut } from "@/types";
 import { Command } from "lucide-vue-next";
-import type { Keybind } from "@/types";
 defineProps<{
-  keybind: Keybind;
+  shortcut: Shortcut;
 }>();
 </script>
 
@@ -10,12 +10,12 @@ defineProps<{
   <div class="bg-muted flex items-center justify-between rounded-lg p-3">
     <div class="flex items-center gap-3">
       <div class="bg-muted/70 flex size-8 items-center justify-center rounded">
-        <Command class="size-4" v-if="keybind.key !== 'Unset'" />
+        <Command class="size-4" v-if="shortcut.key !== 'Unset'" />
       </div>
       <span class="text-foreground text-sm capitalize">{{
-        keybind.action
+        shortcut.action
       }}</span>
     </div>
-    <span class="text-muted-foreground text-xs">{{ keybind.key }}</span>
+    <span class="text-muted-foreground text-xs">{{ shortcut.key }}</span>
   </div>
 </template>

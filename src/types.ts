@@ -1,6 +1,6 @@
 type Base = null | undefined;
 
-export interface Keybind {
+export interface Shortcut {
   key: string;
   name: string;
   action: string;

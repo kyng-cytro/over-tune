@@ -1,5 +1,5 @@
 import { COMMANDS, KEYS, URLS } from "@/constants";
-import type { Keybind, MessageContent } from "@/types";
+import type { Shortcut, MessageContent } from "@/types";
 import { isDefined } from ".";
 
 export const openShortcuts = () => {
@@ -35,10 +35,10 @@ export const sendToContent = (
   });
 };
 
-export const getKeybinds = (): Promise<Keybind[]> => {
+export const getShortcuts = (): Promise<Shortcut[]> => {
   return new Promise((resolve) => {
     chrome.commands.getAll((commands) => {
-      const keybinds: Keybind[] = commands
+      const shortcuts: Shortcut[] = commands
         .map((cmd) => {
           if (!cmd.name || !cmd.description) return null;
           return {
@@ -50,7 +50,7 @@ export const getKeybinds = (): Promise<Keybind[]> => {
         .filter(isDefined)
         .reverse()
         .sort((a) => (a.key !== "Unset" ? -1 : 1));
-      resolve(keybinds);
+      resolve(shortcuts);
     });
   });
 };

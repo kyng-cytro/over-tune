@@ -15,8 +15,9 @@ const selected = computed(() => {
 
 onMounted(() => {
   sendToContent(makeMsg.GET_DEVICES(), (devs) => {
-    if (!devs) {
-      devices.value = [{ id: "default", name: "Default", isActive: true }];
+    if (!devs || !devs.length) {
+      devices.value = [{ id: "default", name: "Default", isActive: false }];
+      return;
     }
     devices.value = devs;
   });
