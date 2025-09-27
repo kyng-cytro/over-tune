@@ -17,7 +17,7 @@ export const isSame = (a: Object | null, b: Object | null) =>
 export const updateSink = (media: HTMLMediaElement, sinkId: string) => {
   if (typeof media.setSinkId === "function") {
     media.setSinkId(sinkId).catch(() => {
-      chrome.storage.local.set({ preferredSinkId: undefined });
+      chrome.storage.local.remove("preferredSinkId");
     });
   }
 };
