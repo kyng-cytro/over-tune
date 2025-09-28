@@ -1,5 +1,11 @@
 # overtune
 
+## 1.0.1
+
+### Patch Changes
+
+- 561d1ad: Release zipped extension
+
 ## 1.0.0
 
 ### Major Changes
