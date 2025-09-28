@@ -5,7 +5,7 @@ Whether you want quicker controls, personalized shortcuts, or flexible device ro
 
 ## Features
 
-- 🎶 **Now Playing Widget** - Always know what’s playing at a glance.
+- 🎶 **Now Playing Widget** - Always know what's playing at a glance.
 - ⌨️ **Customizable Shortcuts** - Set your own shortcuts for play, pause, skip, volume, and more.
 - 🔊 **Custom Output Device** - Choose and switch your playback device directly from the extension.
 - ⚡ **Customizable Actions** (Coming Soon) - Bind actions like opening lyrics, liking a track, or shuffling to keys or buttons.
