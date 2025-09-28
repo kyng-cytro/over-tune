@@ -1,4 +1,4 @@
-import type { MediaInfo } from "@/types";
+import type { MediaInfo } from "./types.ts";
 
 export const STORAGE_KEYS = {
   PREFERRED_SINK_ID: "preferredSinkId",
