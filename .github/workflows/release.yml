@@ -33,8 +33,18 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Check if release commit
+        id: release_check
+        run: |
+          if [ "${{ steps.changesets.outputs.hasChangesets }}" = "false" ] && \
+             [ "${{ github.event.head_commit.author.username }}" = "github-actions[bot]" ]; then
+            echo "is_release=true" >> $GITHUB_OUTPUT
+          else
+            echo "is_release=false" >> $GITHUB_OUTPUT
+          fi
+
       - name: Get Changelog Content
-        if: steps.changesets.outputs.hasChangesets == 'false'
+        if: steps.release_check.outputs.is_release == 'true'
         run: |
           echo "RELEASE_NOTES<<EOF" >> $GITHUB_ENV
           awk '/^## /{if (p) exit; p=1} p' CHANGELOG.md >> $GITHUB_ENV
@@ -42,11 +52,11 @@ jobs:
 
       - name: Read package version
         id: package
-        if: steps.changesets.outputs.hasChangesets == 'false'
+        if: steps.release_check.outputs.is_release == 'true'
         run: echo "version=$(jq -r .version package.json)" >> $GITHUB_OUTPUT
 
       - name: Upload Extension Zip to GitHub Release
-        if: steps.changesets.outputs.hasChangesets == 'false'
+        if: steps.release_check.outputs.is_release == 'true'
         uses: softprops/action-gh-release@v2
         with:
           files: release/release.zip
