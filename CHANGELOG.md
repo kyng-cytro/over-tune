@@ -1,5 +1,11 @@
 # overtune
 
+## 1.0.2
+
+### Patch Changes
+
+- 30b00f8: Release zipped extension
+
 ## 1.0.1
 
 ### Patch Changes
