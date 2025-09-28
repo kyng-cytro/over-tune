@@ -33,25 +33,18 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Get version
-        if: steps.changesets.outputs.hasChangesets == 'false'
-        run: echo "VERSION=$(jq -r .version package.json)" >> $GITHUB_OUTPUT
-
       - name: Get Changelog Content
         if: steps.changesets.outputs.hasChangesets == 'false'
         run: |
-          awk '/^## /{if (p) exit; p=1} p' CHANGELOG.md > notes.txt
-          echo "NOTES<<EOF" >> $GITHUB_OUTPUT
-          cat notes.txt >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
+          echo "RELEASE_NOTES<<EOF" >> $GITHUB_ENV
+          awk '/^## /{if (p) exit; p=1} p' CHANGELOG.md >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
 
       - name: Upload Extension Zip to GitHub Release
         if: steps.changesets.outputs.hasChangesets == 'false'
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v${{ steps.changesets.outputs.VERSION }}
-          name: Over Tune v${{ steps.changesets.outputs.VERSION }}
-          body: ${{ steps.changelog.outputs.NOTES }}
           files: release/release.zip
+          body: ${{ env.RELEASE_NOTES }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
