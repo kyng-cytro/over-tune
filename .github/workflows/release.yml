@@ -40,11 +40,18 @@ jobs:
           awk '/^## /{if (p) exit; p=1} p' CHANGELOG.md >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
 
+      - name: Read package version
+        id: package
+        if: steps.changesets.outputs.hasChangesets == 'false'
+        run: echo "version=$(jq -r .version package.json)" >> $GITHUB_OUTPUT
+
       - name: Upload Extension Zip to GitHub Release
         if: steps.changesets.outputs.hasChangesets == 'false'
         uses: softprops/action-gh-release@v2
         with:
           files: release/release.zip
           body: ${{ env.RELEASE_NOTES }}
+          tag_name: v${{ steps.package.outputs.version }}
+          name: Over Tune v${{ steps.package.outputs.version }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
