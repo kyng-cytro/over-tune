@@ -52,6 +52,6 @@ jobs:
           files: release/release.zip
           body: ${{ env.RELEASE_NOTES }}
           tag_name: v${{ steps.package.outputs.version }}
-          name: Over Tune v${{ steps.package.outputs.version }}
+          name: v${{ steps.package.outputs.version }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

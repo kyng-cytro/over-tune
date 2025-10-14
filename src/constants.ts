@@ -1,10 +1,12 @@
 import type { MediaInfo } from "./types.ts";
 
 export const STORAGE_KEYS = {
-  PREFERRED_SINK_ID: "preferredSinkId",
+  SETTINGS: "settings",
+  PREFERRED_SINK_ID: "preferred-sink-id",
 };
 
 export const URLS = {
+  ROOT: "https://music.youtube.com/",
   CONTENT_SCRIPT: "*://music.youtube.com/*",
   SHORTCUTS: "chrome://extensions/shortcuts",
   PLAY_MUSIC: "https://music.youtube.com/watch?list=RDMM&start_radio=1",
