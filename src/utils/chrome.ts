@@ -1,4 +1,4 @@
-import { COMMANDS, KEYS, URLS } from "@/constants";
+import { COMMANDS, KEYS, STORAGE_KEYS, URLS } from "@/constants";
 import type { Shortcut, MessageContent } from "@/types";
 import { isDefined } from ".";
 
@@ -25,7 +25,20 @@ export const sendToContent = (
       content.type === KEYS.COMMAND_TRIGGERED &&
       content.command === COMMANDS.PLAY_PAUSE
     ) {
-      return chrome.tabs.create({ pinned: true, url: URLS.PLAY_MUSIC });
+      chrome.storage.local
+        .get(STORAGE_KEYS.SETTINGS)
+        .then(({ [STORAGE_KEYS.SETTINGS]: result }) => {
+          if (!result) return;
+          const settings = JSON.parse(result);
+          if (!settings || !settings.openYTM) return;
+          console.log(settings);
+          const url = settings.surprise ? URLS.PLAY_MUSIC : URLS.ROOT;
+          return chrome.tabs.create({
+            url,
+            pinned: settings.pin,
+          });
+        });
+      return;
     }
     const tab = tabs[0];
     if (!tab || !tab.id) return;

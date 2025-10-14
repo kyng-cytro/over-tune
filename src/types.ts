@@ -28,3 +28,9 @@ export interface MediaInfo {
   duration: number | Base;
   status: "none" | "playing" | "paused" | Base;
 }
+
+export interface Settings {
+  pin: boolean;
+  openYTM: boolean;
+  surprise: boolean;
+}

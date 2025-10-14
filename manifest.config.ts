@@ -4,6 +4,8 @@ import { defineManifest } from "@crxjs/vite-plugin";
 export default defineManifest({
   manifest_version: 3,
   name: "Over Tune",
+  description:
+    "Over Tune is a Chrome extension that allows you to fully customize your YouTube Music experience.",
   version: "1.0.0",
   icons: {
     "16": "icon16.png",
