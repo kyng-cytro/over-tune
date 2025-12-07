@@ -1,5 +1,11 @@
 # overtune
 
+## 1.1.1
+
+### Patch Changes
+
+- 2daebaf: add custom action `show-ytm`
+
 ## 1.1.0
 
 ### Minor Changes
