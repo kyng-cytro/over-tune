@@ -2,6 +2,7 @@ import type { MediaInfo } from "./types.ts";
 
 export const STORAGE_KEYS = {
   SETTINGS: "settings",
+  CUSTOM_ACTION: "custom-action",
   PREFERRED_SINK_ID: "preferred-sink-id",
 };
 

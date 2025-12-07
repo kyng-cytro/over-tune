@@ -31,7 +31,6 @@ export const sendToContent = (
           if (!result) return;
           const settings = JSON.parse(result);
           if (!settings || !settings.openYTM) return;
-          console.log(settings);
           const url = settings.surprise ? URLS.PLAY_MUSIC : URLS.ROOT;
           return chrome.tabs.create({
             url,

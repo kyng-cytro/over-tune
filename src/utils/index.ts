@@ -21,3 +21,17 @@ export const updateSink = (media: HTMLMediaElement, sinkId: string) => {
     });
   }
 };
+
+export const getCustomAction = () => {
+  return new Promise<string>((resolve) => {
+    chrome.storage.local
+      .get(STORAGE_KEYS.CUSTOM_ACTION)
+      .then(({ [STORAGE_KEYS.CUSTOM_ACTION]: result }) => {
+        resolve(result);
+      });
+  });
+};
+
+export const updateCustomAction = (action: string) => {
+  chrome.storage.local.set({ [STORAGE_KEYS.CUSTOM_ACTION]: action });
+};
