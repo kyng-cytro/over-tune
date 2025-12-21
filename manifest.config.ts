@@ -21,7 +21,8 @@ export default defineManifest({
       "128": "icon128.png",
     },
   },
-  permissions: ["tabs", "storage", "scripting"],
+  host_permissions: ["https://*.supabase.co/*"],
+  permissions: ["tabs", "storage", "scripting", "offscreen"],
   background: {
     type: "module",
     service_worker: "src/background/index.ts",
@@ -49,4 +50,10 @@ export default defineManifest({
     "volume-down": { description: "Volume down" },
     "custom-action": { description: "Custom action" },
   },
+  web_accessible_resources: [
+    {
+      matches: ["*://*/*"],
+      resources: ["offscreen.html"],
+    },
+  ],
 });

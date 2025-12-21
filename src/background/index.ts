@@ -1,15 +1,16 @@
 import { COMMANDS, KEYS, makeMsg, URLS } from "@/constants";
 import type { MediaInfo } from "@/types";
-import { getCustomAction } from "@/utils";
-import { sendToContent } from "@/utils/chrome";
+import { sendToContent, storageHelper } from "@/utils/chrome";
+import { getExtensionId } from "@/utils/networking";
 
 let currentMedia: MediaInfo | null = null;
+
 chrome.commands.onCommand.addListener(async (command) => {
   if (!Object.values(COMMANDS).includes(command)) return;
   if (command !== "custom-action") {
     return sendToContent(makeMsg.COMMAND_TRIGGERED(command));
   }
-  const action = await getCustomAction();
+  const action = await storageHelper.get("CUSTOM_ACTION");
   switch (action) {
     case "show-ytm":
       chrome.tabs.query({ url: URLS.CONTENT_SCRIPT }, (tabs) => {
@@ -23,7 +24,11 @@ chrome.commands.onCommand.addListener(async (command) => {
       break;
   }
 });
+
 chrome.runtime.onMessage.addListener((msg, _, sendResponse) => {
+  if (msg.type === KEYS.SETUP_OFFSCREEN) {
+    setupOffscreen();
+  }
   if (msg.type === KEYS.MEDIA_UPDATE) {
     currentMedia = msg.data as MediaInfo;
   }
@@ -31,3 +36,18 @@ chrome.runtime.onMessage.addListener((msg, _, sendResponse) => {
     sendResponse(currentMedia);
   }
 });
+
+const setupOffscreen = async () => {
+  const id = await getExtensionId();
+  const exists = await chrome.offscreen.hasDocument();
+  if (!id) return exists && chrome.offscreen.closeDocument();
+  if (exists) return;
+  await chrome.offscreen.createDocument({
+    url: `${URLS.OFFSCREEN}?id=${id}`,
+    reasons: ["WORKERS"],
+    justification: "To maintain Supabase realtime connection",
+  });
+};
+
+chrome.runtime.onStartup.addListener(setupOffscreen);
+chrome.runtime.onInstalled.addListener(setupOffscreen);

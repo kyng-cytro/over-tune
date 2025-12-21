@@ -6,6 +6,16 @@ export interface Shortcut {
   action: string;
 }
 
+export interface Connection {
+  id: string;
+  device_id: string;
+  created_at: string;
+  revoked_at: string | null;
+  devices: {
+    platform: string;
+  };
+}
+
 export interface MessageContent {
   type: string;
   [key: string]: any;
@@ -33,4 +43,8 @@ export interface Settings {
   pin: boolean;
   openYTM: boolean;
   surprise: boolean;
+  networking: {
+    enable: boolean;
+    fingerprint?: string;
+  };
 }

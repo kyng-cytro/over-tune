@@ -7,7 +7,9 @@ export const STORAGE_KEYS = {
 };
 
 export const URLS = {
+  OFFSCREEN: "offscreen.html",
   ROOT: "https://music.youtube.com/",
+  SITE: import.meta.env.VITE_SITE_URL,
   CONTENT_SCRIPT: "*://music.youtube.com/*",
   SHORTCUTS: "chrome://extensions/shortcuts",
   PLAY_MUSIC: "https://music.youtube.com/watch?list=RDMM&start_radio=1",
@@ -27,6 +29,7 @@ export const KEYS = {
   SET_DEVICE: "SET_DEVICE",
   GET_DEVICES: "GET_DEVICES",
   MEDIA_UPDATE: "MEDIA_UPDATE",
+  SETUP_OFFSCREEN: "SETUP_OFFSCREEN",
   COMMAND_TRIGGERED: "COMMAND_TRIGGERED",
 } as const;
 
