@@ -15,6 +15,14 @@ export const getExtensionId = async () => {
   return data?.id;
 };
 
+export const getExtensionName = () => {
+  const ua = navigator.userAgent.toLowerCase();
+  if (ua.includes("mac")) return "Chrome extension on mac";
+  if (ua.includes("win")) return "Chrome extension on windows";
+  if (ua.includes("linux")) return "Chrome extension on linux";
+  return "Chrome extension";
+};
+
 export const setupNetworking = async () => {
   try {
     const { networking, ...rest } = JSON.parse(
@@ -39,9 +47,10 @@ export const setupNetworking = async () => {
       .eq("fingerprint", fingerprint)
       .single();
     if (data) return data.id;
+    const name = getExtensionName();
     const { data: created } = await supabase
       .from("extensions")
-      .insert({ fingerprint })
+      .insert({ name, fingerprint })
       .select("id")
       .single();
 

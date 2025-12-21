@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import DeviceItem from "@/components/Devices/item.vue";
+import type { Connection } from "@/types";
 import { getExtensionId } from "@/utils/networking";
 import supabase from "@/utils/supabase";
 import { useAsyncState } from "@vueuse/core";
@@ -8,11 +9,11 @@ const { state, execute } = await useAsyncState(async () => {
   if (!id) return [];
   const { data: connections, error } = await supabase
     .from("connections")
-    .select("id, device_id, created_at, revoked_at, devices(platform)")
+    .select("id, device_id, created_at, revoked_at, devices(name, platform)")
     .eq("extension_id", id)
     .is("revoked_at", null);
   if (error) throw new Error(error.message);
-  return connections;
+  return connections as unknown as Connection[];
 }, []);
 
 const revoke = async (id: string) => {
@@ -25,14 +26,12 @@ const revoke = async (id: string) => {
 };
 </script>
 <template>
-  <div class="flex flex-1 flex-col overflow-hidden">
-    <div class="scrollbar-thin flex-1 space-y-2 overflow-y-auto">
-      <DeviceItem
-        @revoke="revoke"
-        :key="connection.id"
-        :connection="connection"
-        v-for="connection in state"
-      />
-    </div>
+  <div class="flex flex-1 flex-col space-y-2">
+    <DeviceItem
+      @revoke="revoke"
+      :key="connection.id"
+      :connection="connection"
+      v-for="connection in state"
+    />
   </div>
 </template>

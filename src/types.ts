@@ -12,6 +12,7 @@ export interface Connection {
   created_at: string;
   revoked_at: string | null;
   devices: {
+    name: string;
     platform: string;
   };
 }

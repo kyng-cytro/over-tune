@@ -1,10 +1,26 @@
+import { COMMANDS, makeMsg } from "@/constants";
 import supabase from "@/utils/supabase";
+
+const allowedCommands: (typeof COMMANDS)[keyof typeof COMMANDS][] = [
+  COMMANDS.PLAY_PAUSE,
+  COMMANDS.NEXT_TRACK,
+  COMMANDS.PREV_TRACK,
+  COMMANDS.VOLUME_UP,
+  COMMANDS.VOLUME_DOWN,
+];
 
 const mount = (id: string) => {
   const channel = supabase
     .channel(`ext:${id}`)
-    .on("broadcast", { event: "*" }, (payload) => {
-      console.log("New payload", payload);
+    .on("broadcast", { event: "*" }, (event) => {
+      const { type } = event;
+      if (type !== "broadcast") return;
+      const { payload } = event;
+      if (!allowedCommands.includes(payload?.command)) return;
+      console.log("[offscreen] received", payload);
+      chrome.runtime.sendMessage(
+        makeMsg.PROXY_TO_CONTENT(makeMsg.COMMAND_TRIGGERED(payload.command)),
+      );
     })
     .subscribe();
   if (!channel) return;

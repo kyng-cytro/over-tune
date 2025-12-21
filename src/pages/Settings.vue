@@ -2,7 +2,7 @@
 import Button from "@/components/Button/index.vue";
 import Devices from "@/components/Devices/index.vue";
 import Switch from "@/components/Switch/index.vue";
-import { KEYS } from "@/constants";
+import { makeMsg } from "@/constants";
 import type { Settings } from "@/types";
 import { storageHelper } from "@/utils/chrome";
 import { setupNetworking } from "@/utils/networking";
@@ -34,7 +34,7 @@ watch(
   settings,
   () => {
     storageHelper.set("SETTINGS", JSON.stringify(settings.value));
-    chrome.runtime.sendMessage({ type: KEYS.SETUP_OFFSCREEN });
+    chrome.runtime.sendMessage(makeMsg.SETUP_OFFSCREEN());
   },
   { deep: true },
 );
@@ -61,41 +61,41 @@ const onPairDevice = async () => {
 };
 </script>
 <template>
-  <div class="mb-6">
-    <h2 class="text-foreground mb-4 text-lg font-semibold">Settings</h2>
-    <div class="flex items-center justify-between gap-2">
-      <div class="space-y-2">
-        <h3 class="text-foreground text-sm font-medium">Color Mode</h3>
-        <p class="text-muted-foreground text-xs">
-          Choose your preferred color scheme
-        </p>
+  <div class="scrollbar-thin flex flex-1 flex-col gap-6 overflow-y-auto">
+    <div>
+      <h2 class="text-foreground mb-4 text-lg font-semibold">Settings</h2>
+      <div class="flex items-center justify-between gap-2">
+        <div class="space-y-2">
+          <h3 class="text-foreground text-sm font-medium">Color Mode</h3>
+          <p class="text-muted-foreground text-xs">
+            Choose your preferred color scheme
+          </p>
+        </div>
+        <select
+          v-model="mode"
+          class="border-border bg-background text-foreground focus:ring-ring max-w-max rounded-md border px-3 py-1 text-sm focus:ring-2 focus:outline-none"
+        >
+          <option value="auto">Auto</option>
+          <option value="light">Light</option>
+          <option value="dark">Dark</option>
+        </select>
       </div>
-      <select
-        v-model="mode"
-        class="border-border bg-background text-foreground focus:ring-ring max-w-max rounded-md border px-3 py-1 text-sm focus:ring-2 focus:outline-none"
-      >
-        <option value="auto">Auto</option>
-        <option value="light">Light</option>
-        <option value="dark">Dark</option>
-      </select>
     </div>
-  </div>
-  <div class="mb-6">
-    <div class="flex items-center justify-between gap-2">
-      <div class="space-y-2">
-        <h3 class="text-foreground text-sm font-medium">
-          Open if None Available
-        </h3>
-        <p class="text-muted-foreground text-xs">
-          Automatically open YouTube Music on play when none is detected
-        </p>
+    <div>
+      <div class="flex items-center justify-between gap-2">
+        <div class="space-y-2">
+          <h3 class="text-foreground text-sm font-medium">
+            Open if None Available
+          </h3>
+          <p class="text-muted-foreground text-xs">
+            Automatically open YouTube Music on play when none is detected
+          </p>
+        </div>
+        <Switch v-model="settings.openYTM" />
       </div>
-      <Switch v-model="settings.openYTM" />
     </div>
-  </div>
-  <div>
     <template v-if="settings.openYTM">
-      <div class="mb-6 flex items-center justify-between gap-2">
+      <div class="flex items-center justify-between gap-2">
         <div class="space-y-2">
           <h3 class="text-foreground text-sm font-medium">Surprise Me</h3>
           <p class="text-muted-foreground text-xs">
@@ -104,7 +104,7 @@ const onPairDevice = async () => {
         </div>
         <Switch v-model="settings.surprise" />
       </div>
-      <div class="mb-6 flex items-center justify-between gap-2">
+      <div class="flex items-center justify-between gap-2">
         <div class="space-y-2">
           <h3 class="text-foreground text-sm font-medium">Pin Instance</h3>
           <p class="text-muted-foreground text-xs">
@@ -114,25 +114,30 @@ const onPairDevice = async () => {
         <Switch v-model="settings.pin" />
       </div>
     </template>
-  </div>
-  <div class="mb-4 flex items-center justify-between gap-2">
-    <div class="space-y-2">
-      <h3 class="text-foreground text-sm font-medium">Enable Networking</h3>
-      <p class="text-muted-foreground text-xs">
-        Allow over-tune to communicate over HTTPS & WSS
-      </p>
+    <div class="flex items-center justify-between gap-2">
+      <div class="space-y-2">
+        <h3 class="text-foreground text-sm font-medium">Enable Networking</h3>
+        <p class="text-muted-foreground text-xs">
+          Allow over-tune to communicate over HTTPS & WSS
+        </p>
+      </div>
+      <Switch v-model="settings.networking.enable" />
     </div>
-    <Switch v-model="settings.networking.enable" />
+    <template v-if="settings.networking.enable">
+      <div class="flex items-center justify-between gap-2">
+        <h3 class="text-foreground text-sm font-medium">Devices</h3>
+        <Button
+          size="sm"
+          variant="ghost"
+          :loading="paring"
+          @click="onPairDevice"
+        >
+          <Plus class="size-4" />
+        </Button>
+      </div>
+      <Suspense>
+        <Devices class="-mt-4" />
+      </Suspense>
+    </template>
   </div>
-  <template v-if="settings.networking.enable">
-    <div class="mb-4 flex items-center justify-between gap-2">
-      <h3 class="text-foreground text-sm font-medium">Devices</h3>
-      <Button size="sm" variant="ghost" :loading="paring" @click="onPairDevice">
-        <Plus class="size-4" />
-      </Button>
-    </div>
-    <Suspense>
-      <Devices />
-    </Suspense>
-  </template>
 </template>

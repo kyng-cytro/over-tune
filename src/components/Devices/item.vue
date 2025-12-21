@@ -14,12 +14,13 @@ defineEmits<{
 <template>
   <div class="bg-muted flex items-center justify-between gap-2 rounded-lg p-2">
     <div class="flex flex-col space-y-2">
-      <pre
+      <span
         class="text-foreground truncate text-sm font-medium whitespace-pre-wrap"
-        >{{ connection.device_id }}</pre
+        >{{ connection.devices.name || connection.device_id }} on
+        {{ connection.devices.platform }}</span
       >
       <span class="text-muted-foreground truncate text-xs">
-        {{ connection.devices.platform }}
+        Connnected: {{ new Date(connection.created_at).toLocaleDateString() }}
       </span>
     </div>
     <Button size="sm" variant="ghost" @click="$emit('revoke', connection.id)">

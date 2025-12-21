@@ -26,14 +26,22 @@ chrome.commands.onCommand.addListener(async (command) => {
 });
 
 chrome.runtime.onMessage.addListener((msg, _, sendResponse) => {
-  if (msg.type === KEYS.SETUP_OFFSCREEN) {
-    setupOffscreen();
-  }
-  if (msg.type === KEYS.MEDIA_UPDATE) {
-    currentMedia = msg.data as MediaInfo;
-  }
-  if (msg.type === KEYS.GET_MEDIA) {
-    sendResponse(currentMedia);
+  switch (msg.type) {
+    case KEYS.GET_MEDIA:
+      console.log("[background] getting media");
+      sendResponse(currentMedia);
+      break;
+    case KEYS.MEDIA_UPDATE:
+      currentMedia = msg.data as MediaInfo;
+      break;
+    case KEYS.SETUP_OFFSCREEN:
+      console.log("[background] setting up offscreen");
+      setupOffscreen();
+      break;
+    case KEYS.PROXY_TO_CONTENT:
+      console.log("[background] proxying to content", msg.data);
+      sendToContent(msg.data);
+      break;
   }
 });
 
