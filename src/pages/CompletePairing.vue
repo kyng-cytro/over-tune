@@ -14,7 +14,7 @@ const { sessionId } = useRoute().params;
 
 const code = computedAsync(async () => {
   if (!sessionId) return;
-  return await QRCode.toDataURL(`${URLS.SITE}/pair?id=${sessionId}`);
+  return await QRCode.toDataURL(`${URLS.SITE}/pair?session=${sessionId}`);
 });
 
 const channel = supabase

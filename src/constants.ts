@@ -9,7 +9,7 @@ export const STORAGE_KEYS = {
 export const URLS = {
   OFFSCREEN: "offscreen.html",
   ROOT: "https://music.youtube.com/",
-  SITE: import.meta.env?.VITE_SITE_URL,
+  SITE: "https://over-tune.cytro.com.ng",
   CONTENT_SCRIPT: "*://music.youtube.com/*",
   SHORTCUTS: "chrome://extensions/shortcuts",
   PLAY_MUSIC: "https://music.youtube.com/watch?list=RDMM&start_radio=1",
