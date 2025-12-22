@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Button from "@/components/Button/index.vue";
-import { URLS } from "@/constants";
+import { makeMsg, URLS } from "@/constants";
 import supabase from "@/utils/supabase";
 import { computedAsync } from "@vueuse/core";
 import { BadgeCheck } from "lucide-vue-next";
@@ -31,6 +31,7 @@ const channel = supabase
       console.log("Payload", payload);
       if (payload.new.status === "claimed") {
         paired.value = true;
+        chrome.runtime.sendMessage(makeMsg.SETUP_OFFSCREEN());
       }
     },
   )
