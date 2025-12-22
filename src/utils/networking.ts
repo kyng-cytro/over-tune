@@ -2,6 +2,13 @@ import { storageHelper } from "@/utils/chrome";
 import supabase from "@/utils/supabase";
 import type { Settings } from "@/types";
 
+export const getExtensionFingerprint = async () => {
+  const { networking } = JSON.parse(
+    await storageHelper.get("SETTINGS"),
+  ) as Settings;
+  return networking?.fingerprint;
+};
+
 export const getExtensionId = async () => {
   const { networking } = JSON.parse(
     await storageHelper.get("SETTINGS"),
