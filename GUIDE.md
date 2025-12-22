@@ -27,6 +27,31 @@ But if you allow it, you'll be able to route YouTube Music to a specific device 
 
 ---
 
+## Custom Action
+
+There is one available **Custom Action**, which can be bound to any keyboard shortcut of your choice.
+
+For example, you can bind it to `Ctrl + Alt + 1` to focus the YTM tab or window.
+
+### How to set it up
+
+1. Scroll down to **Shortcuts** and locate **Custom Action**.
+2. Select one of the available actions from the dropdown.
+3. Click **Edit Shortcuts** and assign your preferred key combination.
+
+---
+
+## Remote Companion
+
+Over Tune supports a **Remote Companion**, which lets you control Over Tune from another device.
+
+The Remote Companion uses a pairing mechanism, so you’ll need to pair it with your other device before use. To do this, go to the **Settings** page, enable **Networking**, and click **Add Device**.
+
+Once paired, you’ll be able to control playback from your other device.
+
+> ⚠️ **Beta & Security Notice**
+> The Remote Companion is currently in **beta**. This means it may be unstable and should not be considered fully secure.
+
 ## FAQ
 
 **Is Over Tune free?**
@@ -37,10 +62,11 @@ Nope. Over Tune never listens to or records your mic.
 The permission prompt comes from YouTube Music itself, because Chrome requires it to list audio output devices.
 
 **Does Over Tune store data?**
-Not really. Outside of fonts (pulled from Google Fonts — yeah, I should probably bundle those 😅), Over Tune doesn't reach out to the internet in any way.
-Over Tune does store your preferred device ID, but it's right in your browser's local storage.
+Not really. By default, aside from fonts (pulled from Google Fonts — yes, they should probably be bundled 😅), Over Tune does not connect to the internet in any way.
+Over Tune does store your preferred device ID and Settings, but this is kept entirely in your browser’s local storage.
+This changes slightly if you enable **Networking** and use the **Remote Companion**. In that case, Over Tune generates device IDs and stores them in the cloud solely for pairing between your devices.
 
----
+## We still do **not** store your listening data or any other sensitive personal information. 😅
 
 ## Support
 

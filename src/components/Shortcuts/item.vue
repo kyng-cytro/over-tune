@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Shortcut } from "@/types";
-import { getCustomAction, updateCustomAction } from "@/utils";
+import { storageHelper } from "@/utils/chrome";
 import { Command } from "lucide-vue-next";
 import { computed, onMounted, ref } from "vue";
 
@@ -10,7 +10,9 @@ const { shortcut } = defineProps<{
 
 const customAction = ref("");
 
-onMounted(async () => (customAction.value = await getCustomAction()));
+onMounted(
+  async () => (customAction.value = await storageHelper.get("CUSTOM_ACTION")),
+);
 const isCustom = computed(() => {
   return shortcut.name.toLowerCase().includes("custom");
 });
@@ -31,7 +33,10 @@ const isCustom = computed(() => {
         <select
           :value="customAction"
           @change="
-            updateCustomAction(($event.target as HTMLSelectElement).value)
+            storageHelper.set(
+              'CUSTOM_ACTION',
+              ($event.target as HTMLSelectElement).value,
+            )
           "
           class="text-foreground bg-muted/70 w-full py-1 text-sm outline-none"
         >

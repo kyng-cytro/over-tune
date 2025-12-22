@@ -1,14 +1,15 @@
 # Over Tune
 
-Over Tune is a Chrome extension that allows you to fully customize your YouTube Music experience.
-Whether you want quicker controls, personalized shortcuts, or flexible device routing, Over Tune helps you stay in tune with your music.
+Over Tune is a Chrome extension that lets you fully customize your YouTube Music experience.
+Whether you want quicker controls, powerful shortcuts, custom actions, or flexible device routing, Over Tune helps you stay in tune with your music.
 
 ## Features
 
-- 🎶 **Now Playing Widget** - Always know what's playing at a glance.
-- ⌨️ **Customizable Shortcuts** - Set your own shortcuts for play, pause, skip, volume, and more.
-- 🔊 **Custom Output Device** - Choose and switch your playback device directly from the extension.
-- ⚡ **Customizable Actions** (Coming Soon) - Bind actions like opening lyrics, liking a track, or shuffling to keys or buttons.
+- 🎶 **Now Playing Widget** – Always know what’s playing at a glance.
+- ⌨️ **Customizable Shortcuts** – Set your own shortcuts for play, pause, skip, volume, and more.
+- ⚡ **Custom Actions** – Bind actions like focusing the YTM tab, opening lyrics, liking a track, or shuffling directly to keyboard shortcuts.
+- 🔊 **Custom Output Device** – Choose and switch your playback device directly from the extension.
+- 📱 **Remote Companion (Beta)** – Control playback from another device using secure pairing.
 
 ## Screenshots
 
@@ -26,8 +27,8 @@ Whether you want quicker controls, personalized shortcuts, or flexible device ro
 
 ## Help & Usage
 
-Need help getting started?
-Check out the [Over Tune Guide](./GUIDE.md) for setup tips, shortcut customization, audio device switching, and FAQs.
+Need help getting started?  
+Check out the [Over Tune Guide](./GUIDE.md) for setup instructions, shortcut and custom action configuration, audio device switching, remote companion setup, and FAQs.
 
 ## Contributing
 

@@ -1,7 +1,7 @@
-import { COMMANDS, KEYS, makeMsg, STORAGE_KEYS } from "@/constants";
+import { COMMANDS, KEYS, makeMsg } from "@/constants";
 import type { MediaInfo } from "@/types";
 import { isSame, updateSink } from "@/utils";
-import { getDevices, sendBroadcast } from "@/utils/chrome";
+import { getDevices, sendBroadcast, storageHelper } from "@/utils/chrome";
 
 let previousInfo: MediaInfo | null = null;
 
@@ -36,7 +36,7 @@ pushUpdate();
 
 chrome.runtime.onMessage.addListener((msg) => {
   if (msg.type !== KEYS.SET_DEVICE) return;
-  chrome.storage.local.set({ [STORAGE_KEYS.PREFERRED_SINK_ID]: msg.deviceId });
+  storageHelper.set("PREFERRED_SINK_ID", msg.deviceId);
   const media = document.querySelector(
     "audio, video",
   ) as HTMLMediaElement | null;
@@ -44,23 +44,21 @@ chrome.runtime.onMessage.addListener((msg) => {
   updateSink(media, msg.deviceId);
 });
 
-chrome.storage.local
-  .get(STORAGE_KEYS.PREFERRED_SINK_ID)
-  .then(({ preferredSinkId }) => {
-    if (!preferredSinkId) return;
-    document.querySelectorAll("audio, video").forEach((media) => {
-      updateSink(media as HTMLMediaElement, preferredSinkId);
-    });
-    new MutationObserver((mutations) => {
-      for (const m of mutations) {
-        for (const node of m.addedNodes) {
-          if (node instanceof HTMLMediaElement) {
-            updateSink(node, preferredSinkId);
-          }
+storageHelper.get("PREFERRED_SINK_ID").then((result) => {
+  if (!result) return;
+  document.querySelectorAll("audio, video").forEach((media) => {
+    updateSink(media as HTMLMediaElement, result);
+  });
+  new MutationObserver((mutations) => {
+    for (const m of mutations) {
+      for (const node of m.addedNodes) {
+        if (node instanceof HTMLMediaElement) {
+          updateSink(node, result);
         }
       }
-    }).observe(document.body, { childList: true, subtree: true });
-  });
+    }
+  }).observe(document.body, { childList: true, subtree: true });
+});
 
 chrome.runtime.onMessage.addListener((msg, _, sendResponse) => {
   if (msg.type !== KEYS.GET_DEVICES) return;

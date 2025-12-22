@@ -1,21 +1,13 @@
-<template>
-  <button
-    :class="buttonClasses"
-    :disabled="disabled"
-    @click="$emit('click', $event)"
-  >
-    <slot />
-  </button>
-</template>
-
 <script setup lang="ts">
+import { Loader2 } from "lucide-vue-next";
 import { computed } from "vue";
 
 interface Props {
-  variant?: "primary" | "secondary" | "ghost" | "control";
-  size?: "sm" | "md" | "lg";
+  loading?: boolean;
   disabled?: boolean;
   fullWidth?: boolean;
+  size?: "sm" | "md" | "lg";
+  variant?: "primary" | "secondary" | "ghost" | "control";
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -62,3 +54,13 @@ const buttonClasses = computed(() => {
   ].join(" ");
 });
 </script>
+<template>
+  <button
+    :class="buttonClasses"
+    :disabled="disabled"
+    @click="$emit('click', $event)"
+  >
+    <slot v-if="!loading" />
+    <Loader2 v-else class="size-4 animate-spin" />
+  </button>
+</template>

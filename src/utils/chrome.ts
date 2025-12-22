@@ -1,6 +1,23 @@
 import { COMMANDS, KEYS, STORAGE_KEYS, URLS } from "@/constants";
-import type { Shortcut, MessageContent } from "@/types";
+import type { MessageContent, Shortcut } from "@/types";
 import { isDefined } from ".";
+
+export const storageHelper = {
+  get: async (key: keyof typeof STORAGE_KEYS) => {
+    const { [STORAGE_KEYS[key]]: result } = await chrome.storage.local.get(
+      STORAGE_KEYS[key],
+    );
+    return result;
+  },
+  set: async (key: keyof typeof STORAGE_KEYS, value: any) => {
+    await chrome.storage.local.set({
+      [STORAGE_KEYS[key]]: value,
+    });
+  },
+  remove: async (key: keyof typeof STORAGE_KEYS) => {
+    await chrome.storage.local.remove(STORAGE_KEYS[key]);
+  },
+};
 
 export const openShortcuts = () => {
   return chrome.tabs.create({ url: URLS.SHORTCUTS });
@@ -19,25 +36,21 @@ export const sendToContent = (
   content: MessageContent,
   cb?: (response: any) => void,
 ) => {
-  chrome.tabs.query({ url: URLS.CONTENT_SCRIPT }, (tabs) => {
+  chrome.tabs.query({ url: URLS.CONTENT_SCRIPT }, async (tabs) => {
     if (
       !tabs.length &&
       content.type === KEYS.COMMAND_TRIGGERED &&
       content.command === COMMANDS.PLAY_PAUSE
     ) {
-      chrome.storage.local
-        .get(STORAGE_KEYS.SETTINGS)
-        .then(({ [STORAGE_KEYS.SETTINGS]: result }) => {
-          if (!result) return;
-          const settings = JSON.parse(result);
-          if (!settings || !settings.openYTM) return;
-          const url = settings.surprise ? URLS.PLAY_MUSIC : URLS.ROOT;
-          return chrome.tabs.create({
-            url,
-            pinned: settings.pin,
-          });
-        });
-      return;
+      const settings = await storageHelper.get("SETTINGS");
+      if (!settings) return;
+      const { openYTM, surprise, pin } = JSON.parse(settings);
+      if (!openYTM) return;
+      const url = surprise ? URLS.PLAY_MUSIC : URLS.ROOT;
+      return chrome.tabs.create({
+        url,
+        pinned: pin,
+      });
     }
     const tab = tabs[0];
     if (!tab || !tab.id) return;

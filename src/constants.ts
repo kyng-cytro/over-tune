@@ -7,7 +7,9 @@ export const STORAGE_KEYS = {
 };
 
 export const URLS = {
+  OFFSCREEN: "offscreen.html",
   ROOT: "https://music.youtube.com/",
+  SITE: "https://over-tune.cytro.com.ng",
   CONTENT_SCRIPT: "*://music.youtube.com/*",
   SHORTCUTS: "chrome://extensions/shortcuts",
   PLAY_MUSIC: "https://music.youtube.com/watch?list=RDMM&start_radio=1",
@@ -27,6 +29,8 @@ export const KEYS = {
   SET_DEVICE: "SET_DEVICE",
   GET_DEVICES: "GET_DEVICES",
   MEDIA_UPDATE: "MEDIA_UPDATE",
+  SETUP_OFFSCREEN: "SETUP_OFFSCREEN",
+  PROXY_TO_CONTENT: "PROXY_TO_CONTENT",
   COMMAND_TRIGGERED: "COMMAND_TRIGGERED",
 } as const;
 
@@ -41,5 +45,10 @@ export const makeMsg = {
   COMMAND_TRIGGERED: (command: string) => ({
     command,
     type: KEYS.COMMAND_TRIGGERED,
+  }),
+  SETUP_OFFSCREEN: () => ({ type: KEYS.SETUP_OFFSCREEN }),
+  PROXY_TO_CONTENT: (data: any) => ({
+    type: KEYS.PROXY_TO_CONTENT,
+    data,
   }),
 };
