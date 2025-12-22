@@ -6,7 +6,7 @@ export default defineManifest({
   name: "Over Tune",
   description:
     "Over Tune is a Chrome extension that allows you to fully customize your YouTube Music experience.",
-  version: "1.0.0",
+  version: "1.2.0",
   icons: {
     "16": "icon16.png",
     "48": "icon48.png",
