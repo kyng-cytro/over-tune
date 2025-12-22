@@ -4,7 +4,7 @@
 
 ### Patch Changes
 
-- d8f2b6d: Fix 1.2.0 release
+- d8f2b6d: Fix 1.2.0 bad release
 
 ## 1.2.0
 
