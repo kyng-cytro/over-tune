@@ -13,7 +13,7 @@ export const getExtensionId = async () => {
   const { networking } = JSON.parse(
     await storageHelper.get("SETTINGS"),
   ) as Settings;
-  if (!networking.enable) return;
+  if (!networking?.enable) return;
   const { data } = await supabase
     .from("extensions")
     .select("id")
@@ -35,7 +35,7 @@ export const setupNetworking = async () => {
     const { networking, ...rest } = JSON.parse(
       await storageHelper.get("SETTINGS"),
     ) as Settings;
-    if (!networking.enable) return;
+    if (!networking?.enable) return;
     let stored = networking.fingerprint;
     if (!stored) {
       stored = crypto.randomUUID();

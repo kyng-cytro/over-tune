@@ -27,7 +27,7 @@ const settings = ref<Settings>(defaultSettings);
 onMounted(async () => {
   const result = await storageHelper.get("SETTINGS");
   if (!result) return;
-  settings.value = JSON.parse(result);
+  settings.value = { ...defaultSettings, ...JSON.parse(result) };
 });
 
 watch(
