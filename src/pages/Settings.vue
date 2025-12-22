@@ -118,7 +118,7 @@ const onPairDevice = async () => {
       <div class="space-y-2">
         <h3 class="text-foreground text-sm font-medium">Enable Networking</h3>
         <p class="text-muted-foreground text-xs">
-          Allow over-tune to communicate over HTTPS & WSS
+          Allow Over Tune to communicate with companion devices (beta)
         </p>
       </div>
       <Switch v-model="settings.networking.enable" />
